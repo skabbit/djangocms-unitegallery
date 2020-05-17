@@ -9,9 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 
 from cms.models import CMSPlugin
-from cms.utils.compat.dj import python_2_unicode_compatible
-# not needed anymore
-# from sorl.thumbnail.templatetags.thumbnail import is_portrait
+from six import python_2_unicode_compatible
 
 from .settings import DJANGOCMS_UNITEGALLERY_CONFIG as CONFIG
 
@@ -95,7 +93,8 @@ class GalleryPhoto(models.Model):
     gallery = models.ForeignKey(
         Gallery,
         verbose_name=_("Gallery"),
-        related_name="photos"
+        related_name="photos",
+        on_delete=models.CASCADE
     )
 
     def __str__(self):
