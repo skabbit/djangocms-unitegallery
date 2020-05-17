@@ -21,11 +21,10 @@ class GalleryPlugin(CMSPluginBase):
     inlines = [PhotoInline, ]
 
     def get_render_template(self, context, instance, placeholder):
-        try:
-            import easy_thumbnails
-            return 'djangocms_unitegallery/easythumb-gallery.html'
-        except ImportError:
-            return 'djangocms_unitegallery/gallery.html'
+        default = 'djangocms_unitegallery/gallery.html'
+        if CONFIG['USE_EASYTHUMBNAILS']:
+            default = 'djangocms_unitegallery/easythumb-gallery.html'
+        return default
 
     def render(self, context, instance, placeholder):
         context.update({
